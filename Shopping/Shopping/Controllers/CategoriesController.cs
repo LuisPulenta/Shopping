@@ -6,23 +6,23 @@ using Shopping.Data.Entities;
 
 namespace Shopping.Controllers
 {
-    public class CountriesController : Controller
+    public class CategoriesController : Controller
     {
         private readonly DataContext _context;
 
-        public CountriesController(DataContext context)
+        public CategoriesController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Countries
+        // GET: Categories
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Countries.ToListAsync());
+            return View(await _context.Categories.ToListAsync());
         }
 
-        // GET: Countries/Details/5
+        // GET: Categories/Details/5
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
@@ -31,33 +31,33 @@ namespace Shopping.Controllers
                 return NotFound();
             }
 
-            var country = await _context.Countries
+            var Category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (country == null)
+            if (Category == null)
             {
                 return NotFound();
             }
 
-            return View(country);
+            return View(Category);
         }
 
-        // GET: Countries/Create
+        // GET: Categories/Create
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Countries/Create
+        // POST: Categories/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Country country)
+        public async Task<IActionResult> Create(Category Category)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Add(country);
+                    _context.Add(Category);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -65,7 +65,7 @@ namespace Shopping.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un país con el mismo nombre.");
+                        ModelState.AddModelError(string.Empty, "Ya existe una categoría con el mismo nombre.");
                     }
                     else
                     {
@@ -75,12 +75,12 @@ namespace Shopping.Controllers
                 catch (Exception exception)
                 {
                     ModelState.AddModelError(string.Empty, exception.Message);
-                }   
+                }
             }
-            return View(country);
+            return View(Category);
         }
 
-        // GET: Countries/Edit/5
+        // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,20 +88,20 @@ namespace Shopping.Controllers
                 return NotFound();
             }
 
-            var country = await _context.Countries.FindAsync(id);
-            if (country == null)
+            var Category = await _context.Categories.FindAsync(id);
+            if (Category == null)
             {
                 return NotFound();
             }
-            return View(country);
+            return View(Category);
         }
 
-        // POST: Countries/Edit/5
+        // POST: Categories/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Country country)
+        public async Task<IActionResult> Edit(int id, Category Category)
         {
-            if (id != country.Id)
+            if (id != Category.Id)
             {
                 return NotFound();
             }
@@ -110,7 +110,7 @@ namespace Shopping.Controllers
             {
                 try
                 {
-                    _context.Update(country);
+                    _context.Update(Category);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -118,7 +118,7 @@ namespace Shopping.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un país con el mismo nombre.");
+                        ModelState.AddModelError(string.Empty, "Ya existe una categoría con el mismo nombre.");
                     }
                     else
                     {
@@ -129,12 +129,12 @@ namespace Shopping.Controllers
                 {
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
-                
+
             }
-            return View(country);
+            return View(Category);
         }
 
-        // GET: Countries/Delete/5
+        // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,23 +142,23 @@ namespace Shopping.Controllers
                 return NotFound();
             }
 
-            var country = await _context.Countries
+            var Category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (country == null)
+            if (Category == null)
             {
                 return NotFound();
             }
 
-            return View(country);
+            return View(Category);
         }
 
-        // POST: Countries/Delete/5
+        // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var country = await _context.Countries.FindAsync(id);
-            _context.Countries.Remove(country);
+            var Category = await _context.Categories.FindAsync(id);
+            _context.Categories.Remove(Category);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

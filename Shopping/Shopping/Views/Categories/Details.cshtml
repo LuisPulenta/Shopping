@@ -1,13 +1,13 @@
-﻿@model Shopping.Data.Entities.Country
+﻿@model Shopping.Data.Entities.Category
 
 @{
     ViewData["Title"] = "Details";
 }
 
 <div>
-    <h4>Detalles del país</h4>
+    <h4>Detalles de la categoría</h4>
     <hr />
-     <partial name="_CountryDetails"/>
+     <partial name="_CategoryDetails"/>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-warning btn-sm">Editar</a>

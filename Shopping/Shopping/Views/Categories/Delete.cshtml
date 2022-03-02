@@ -1,14 +1,14 @@
-﻿@model Shopping.Data.Entities.Country
+﻿@model Shopping.Data.Entities.Category
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h3>Está seguro de borrar este registro?</h3>
+<h3>Está seguro de borrar esta categoría?</h3>
 <div>
-    <h4>Borrar País</h4>
+    <h4>Borrar Categoría</h4>
     <hr />
-   <partial name="_CountryDetails"/>
+   <partial name="_CategoryDetails"/>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />

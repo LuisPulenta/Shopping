@@ -1,10 +1,10 @@
-﻿@model Shopping.Data.Entities.Country
+﻿@model Shopping.Data.Entities.Category
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h4>Editar País</h4>
+<h4>Editar Categoría</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -12,7 +12,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
 
-            <partial name="_Country"/>
+            <partial name="_Category"/>
               
             <div class="form-group mt-2">
                 <input type="submit" value="Guardar" class="btn btn-outline-primary btn-sm" />
