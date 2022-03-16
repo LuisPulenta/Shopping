@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Shooping.Api.Helpers;
-using Shooping.Data;
+using Shopping.Helpers;
+using Shopping.Data;
 using Shopping.Data.Entities;
+using Shopping.Models;
 
-namespace Shopping.Api.Helpers
+namespace Shopping.Helpers
 {
     public class UserHelper : IUserHelper
     {
@@ -52,10 +53,10 @@ namespace Shopping.Api.Helpers
             return await _userManager.IsInRoleAsync(user, roleName);
         }
 
-        //public async Task<SignInResult> LoginAsync(LoginViewModel model)
-        //{
-        //    return await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
-        //}
+        public async Task<SignInResult> LoginAsync(LoginViewModel model)
+        {
+            return await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+        }
 
         public async Task LogoutAsync()
         {

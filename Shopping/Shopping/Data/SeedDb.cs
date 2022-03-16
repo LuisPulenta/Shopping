@@ -1,5 +1,5 @@
-﻿using Shooping.Api.Helpers;
-using Shooping.Data;
+﻿using Shopping.Helpers;
+using Shopping.Data;
 using Shopping.Data.Entities;
 using Shopping.Enums;
 

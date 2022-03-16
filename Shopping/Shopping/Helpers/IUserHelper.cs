@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Shopping.Data.Entities;
+using Shopping.Models;
 
-namespace Shooping.Api.Helpers
+namespace Shopping.Helpers
 {
     public interface IUserHelper
     {
@@ -15,7 +16,7 @@ namespace Shooping.Api.Helpers
 
         Task<bool> IsUserInRoleAsync(User user, string roleName);
 
-        //Task<SignInResult> LoginAsync(LoginViewModel model);
+        Task<SignInResult> LoginAsync(LoginViewModel model);
 
         Task LogoutAsync();
 

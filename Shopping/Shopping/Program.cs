@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Shooping.Api.Helpers;
-using Shooping.Data;
-using Shopping.Api.Helpers;
+using Shopping.Helpers;
+using Shopping.Data;
+using Shopping.Helpers;
 using Shopping.Data;
 using Shopping.Data.Entities;
 
@@ -25,8 +25,15 @@ cfg.Password.RequireUppercase = false;
 cfg.Password.RequiredLength = 6;
 }).AddEntityFrameworkStores<DataContext>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/NotAuthorized";
+    options.AccessDeniedPath = "/Account/NotAuthorized";
+});
+
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IUserHelper,UserHelper>();
+builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 var app = builder.Build();
@@ -48,6 +55,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/error/{0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -62,3 +70,4 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
