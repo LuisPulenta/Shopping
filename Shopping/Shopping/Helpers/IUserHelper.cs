@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Shopping.Data.Entities;
+using Shopping.Enums;
 using Shopping.Models;
 
 namespace Shopping.Helpers
@@ -26,7 +27,7 @@ namespace Shopping.Helpers
 
         Task<IdentityResult> DeleteUserAsync(User user);
 
-        //Task<User> AddUserAsync(AddUserViewModel model, string imageId, UserType userType);
+        Task<User> AddUserAsync(AddUserViewModel model);
 
         Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword);
 

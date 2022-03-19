@@ -33,7 +33,7 @@ namespace Shopping.Data.Entities
 
         //TODO: Corregir ruta
         [Display(Name = "Foto")]
-        public string ImageFullPath => string.IsNullOrEmpty(ImageId)
+        public string? ImageFullPath => string.IsNullOrEmpty(ImageId)
              ? "https://localhost:7101/images/nouser.png"
             : $"https://localhost:7101{ImageId.Substring(1)}";
         //? "http://keypress.serveftp.net:99/ShoppingApi/Images/nouser.png"
