@@ -46,6 +46,8 @@ namespace Shopping.Helpers
         {
             return await _context.Users
                 .Include(u=>u.City)
+                .ThenInclude(c=>c.State)
+                .ThenInclude(s => s.Country)
                 .FirstOrDefaultAsync(x => x.Email == email);
         }
 
@@ -67,6 +69,9 @@ namespace Shopping.Helpers
         public async Task<User> GetUserByIdAsync(string id)
         {
             return await _context.Users
+                .Include(u => u.City)
+                .ThenInclude(c => c.State)
+                .ThenInclude(s => s.Country)
                 .FirstOrDefaultAsync(x => x.Id == id.ToString());
         }
 

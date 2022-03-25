@@ -33,15 +33,18 @@ namespace Shopping.Models
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Foto")]
-        public string ImageId { get; set; }
+        public string? ImageId { get; set; }
 
         [Display(Name = "Foto")]
         public string ImageFullPath => string.IsNullOrEmpty(ImageId)
-            ? $"http://keypress.serveftp.net:99/ShoppingApi/Images/nouser.png"
-            : $"http://keypress.serveftp.net:99/ShoppingApi{ImageId.Substring(1)}";
+            ? "https://localhost:7101/images/nouser.png"
+            : $"https://localhost:7101{ImageId.Substring(1)}";
+            //? $"http://keypress.serveftp.net:99/ShoppingApi/Images/nouser.png"
+            //: $"http://keypress.serveftp.net:99/ShoppingApi{ImageId.Substring(1)}";
+
 
         [Display(Name = "Foto")]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
 
         [Display(Name = "País")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un País.")]
