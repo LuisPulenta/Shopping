@@ -33,7 +33,7 @@ namespace Shopping.Models
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Foto")]
-        public string? ImageId { get; set; }
+        public string ImageId { get; set; }
 
         [Display(Name = "Foto")]
         public string ImageFullPath => string.IsNullOrEmpty(ImageId)
@@ -44,7 +44,7 @@ namespace Shopping.Models
 
 
         [Display(Name = "Foto")]
-        public IFormFile? ImageFile { get; set; }
+        public IFormFile ImageFile { get; set; }
 
         [Display(Name = "País")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un País.")]

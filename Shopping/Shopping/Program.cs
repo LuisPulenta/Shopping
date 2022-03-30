@@ -23,6 +23,9 @@ cfg.Password.RequireLowercase = false;
 cfg.Password.RequireNonAlphanumeric = false;
 cfg.Password.RequireUppercase = false;
 cfg.Password.RequiredLength = 6;
+cfg.Lockout.DefaultLockoutTimeSpan=TimeSpan.FromMinutes(1);
+cfg.Lockout.MaxFailedAccessAttempts = 3;
+cfg.Lockout.AllowedForNewUsers = true;
 }).AddEntityFrameworkStores<DataContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
