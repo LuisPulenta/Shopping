@@ -47,11 +47,7 @@ namespace Shopping.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            Country country = new()
-            {
-                States = new List<State>()
-            };
-            return View(country);
+            return View();
         }
 
         // POST: Categories/Create

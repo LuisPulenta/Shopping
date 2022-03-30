@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shopping.Commons;
 using Shopping.Data;
 using Shopping.Data.Entities;
 using Shopping.Enums;
@@ -16,14 +17,15 @@ namespace Shooping.Controllers
         private readonly IUserHelper _userHelper;
         private readonly IImageHelper _imageHelper;
         private readonly ICombosHelper _combosHelper;
+        private readonly IMailHelper _mailHelper;
 
-        public UsersController(DataContext context, IUserHelper userHelper, IImageHelper imageHelper, ICombosHelper combosHelper)
+        public UsersController(DataContext context, IUserHelper userHelper, IImageHelper imageHelper, ICombosHelper combosHelper,IMailHelper mailHelper)
         {
             _context = context;
             _userHelper = userHelper;
             _imageHelper = imageHelper;
             _combosHelper = combosHelper;
-
+            _mailHelper = mailHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -74,8 +76,26 @@ namespace Shooping.Controllers
                     model.UserType = UserType.Admin;
                     return View(model);
                 };
+                string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                {
+                    userid = user.Id,
+                    token = myToken
+                }, protocol: HttpContext.Request.Scheme);
 
-                   return RedirectToAction("Index", "Home");
+                Response response = _mailHelper.SendMail(
+                    $"{model.FirstName} {model.LastName}",
+                    model.Username,
+                    "Shopping - Confirmación de cuenta",
+                    $"<h1>Shopping - Confirmación de cuenta</h1>" +
+                    $"Para habilitar el usuario, por favor hacer clic en el siguiente enlace: " +
+                    $"</hr></br><p><a href = \"{tokenLink}\">Confirmar Email</a></p>");
+                if (response.IsSuccess)
+                {
+                    ViewBag.Message = "Las instrucciones para habilitar el administrador han sido enviadas al correo.";
+                    return View(model);
+                }
+                ModelState.AddModelError(string.Empty, response.Message);
 
             }
             model.Countries = await _combosHelper.GetComboCountriesAsync();

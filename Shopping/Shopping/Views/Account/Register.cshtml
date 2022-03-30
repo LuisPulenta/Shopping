@@ -5,6 +5,13 @@
 }
 
 <h4>Registrar Usuario</h4>
+
+<div class="text-success">
+    <h3>
+        @ViewBag.Message
+    </h3>
+</div>
+
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -42,18 +49,11 @@
              <partial name="_User" />
 
             <div class="form-group mt-2">
-                <input type="submit" value="Registrar" class="btn btn-primary btn-sm" />
+                <input type="submit" value="Registrar" class="btn btn-outline-primary btn-sm" />
             </div>
         </form>
     </div>
 </div>
-
-<div class="text-success">
-    <p>
-        @ViewBag.Message
-    </p>
-</div>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
