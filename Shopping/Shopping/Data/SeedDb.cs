@@ -2,6 +2,7 @@
 using Shopping.Data;
 using Shopping.Data.Entities;
 using Shopping.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Shopping.Data
 {
@@ -21,11 +22,12 @@ namespace Shopping.Data
             await _context.Database.EnsureCreatedAsync();
             await CheckCategoriesAsync();
             await CheckCountriesAsync();
+            await CheckProductsAsync();
             await CheckRolesAsync();
-            await CheckUserAsync("1010", "Luis", "Núñez", "luis@yopmail.com", "351 681 4963", "Espora 2052", UserType.Admin);
-            await CheckUserAsync("2020", "Pablo", "Lacuadri", "pablo@yopmail.com", "351 555 412234", "Villa Santa Ana", UserType.Admin);
-            await CheckUserAsync("3030", "Diego", "Maradona", "maradona@yopmail.com", "311 322 4620", "Villa Fiorito", UserType.User);
-            await CheckUserAsync("4040", "Lionel", "Messi", "messi@yopmail.com", "311 322 4620", "París", UserType.User);
+            await CheckUserAsync("1010", "Luis", "Núñez", "luis@yopmail.com", "351 681 4963", "Espora 2052","luis.jpg", UserType.Admin);
+            await CheckUserAsync("2020", "Pablo", "Lacuadri", "pablo@yopmail.com", "351 555 412234", "Villa Santa Ana", "pablo.jpg", UserType.Admin);
+            await CheckUserAsync("3030", "Diego", "Maradona", "maradona@yopmail.com", "311 322 4620", "Villa Fiorito", "maradona.jpg", UserType.User);
+            await CheckUserAsync("4040", "Lionel", "Messi", "messi@yopmail.com", "311 322 4620", "París", "messi.jpg", UserType.User);
         }
 
         private async Task CheckRolesAsync()
@@ -34,7 +36,7 @@ namespace Shopping.Data
             await _userHelper.CheckRoleAsync(UserType.User.ToString());
         }
 
-        private async Task CheckUserAsync(string document, string firstName, string lastName, string email, string phoneNumber, string address, UserType userType)
+        private async Task CheckUserAsync(string document, string firstName, string lastName, string email, string phoneNumber, string address, string image, UserType userType)
         {
             User user = await _userHelper.GetUserAsync(email);
             if (user == null)
@@ -50,6 +52,7 @@ namespace Shopping.Data
                     UserName = email,
                     UserType = userType,
                     City=_context.Cities.FirstOrDefault(),
+                    ImageId= $"~/images/users/{image}"
                 };
 
                 await _userHelper.AddUserAsync(user, "123456");
@@ -82,6 +85,7 @@ namespace Shopping.Data
                 _context.Categories.Add(new Category { Name = "Deportes" });
                 _context.Categories.Add(new Category { Name = "Apple" });
                 _context.Categories.Add(new Category { Name = "Mascotas" });
+                _context.Categories.Add(new Category { Name = "Gamer" });
                 await _context.SaveChangesAsync();
             }
         }
@@ -172,5 +176,47 @@ namespace Shopping.Data
                 await _context.SaveChangesAsync();
             }
         }
+
+        private async Task CheckProductsAsync()
+        {
+            if (!_context.Products.Any())
+            {
+                await AddProductAsync("Apple Pencil", 270000M, 12F, new List<string>() { "Tecnología", "Apple" }, new List<string>() { "ApplePencil.jpg", "ApplePencil2.jpg" });
+                await AddProductAsync("IPad", 250000M, 12F, new List<string>() { "Tecnología", "Apple" }, new List<string>() { "IPad.jpg", "IPad2.jpg", "IPad3.jpg" });
+                await AddProductAsync("IPhoneX", 1300000M, 12F, new List<string>() { "Tecnología", "Apple" }, new List<string>() { "IPhoneX.jpg", "IPhoneX2.jpg", "IPhoneX3.jpg", "IPhoneX4.jpg" });
+                await AddProductAsync("Notebook", 870000M, 12F, new List<string>() { "Tecnología" }, new List<string>() { "Notebook.jpg", "Notebook2.jpg", "Notebook3.jpg", "Notebook4.jpg", "Notebook5.jpg" });
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task AddProductAsync(string name, decimal price, float stock, List<string> categories, List<string> images)
+        {
+            Product product = new()
+            {
+                Description = name,
+                Name = name,
+                Price = price,
+                Stock = stock,
+                ProductCategories = new List<ProductCategory>(),
+                ProductImages = new List<ProductImage>()
+            };
+
+            foreach (string? category in categories)
+            {
+                product.ProductCategories.Add(new ProductCategory { Category = await _context.Categories.FirstOrDefaultAsync(c => c.Name == category) });
+            }
+
+
+            foreach (string? image in images)
+            {
+                string imageId = $"~/images/products/{image}";
+                product.ProductImages.Add(new ProductImage { ImageId = imageId });
+            }
+
+            _context.Products.Add(product);
+        }
+
+
+
     }
 }

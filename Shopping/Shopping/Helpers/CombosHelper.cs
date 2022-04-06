@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Shopping.Data;
 using Microsoft.EntityFrameworkCore;
+using Shopping.Data.Entities;
 
 namespace Shopping.Helpers
 {
@@ -23,6 +24,34 @@ namespace Shopping.Helpers
                 Value = $"{x.Id}"
             }).OrderBy(x => x.Text)
               .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione una Categoría...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync(IEnumerable<Category> filter)
+        {
+            List<Category> categories = await _context.Categories.ToListAsync();
+            List<Category> categoriesFiltered = new();
+            foreach (var category in categories)
+            {
+                if(!filter.Any(c=> c.Id == category.Id))
+                {
+                    categoriesFiltered.Add(category);
+                }
+            }
+
+            List<SelectListItem> list = categoriesFiltered.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = $"{x.Id}"
+            }).OrderBy(x => x.Text)
+              .ToList();
 
             list.Insert(0, new SelectListItem
             {
