@@ -13,7 +13,6 @@ namespace Shopping.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
-
         public HomeController(ILogger<HomeController> logger,DataContext context, IUserHelper userHelper)
         {
             _logger = logger;
