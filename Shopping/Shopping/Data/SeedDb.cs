@@ -28,6 +28,13 @@ namespace Shopping.Data
             await CheckUserAsync("2020", "Pablo", "Lacuadri", "pablo@yopmail.com", "351 555 412234", "Villa Santa Ana", "pablo.jpg", UserType.Admin);
             await CheckUserAsync("3030", "Diego", "Maradona", "maradona@yopmail.com", "311 322 4620", "Villa Fiorito", "maradona.jpg", UserType.User);
             await CheckUserAsync("4040", "Lionel", "Messi", "messi@yopmail.com", "311 322 4620", "París", "messi.jpg", UserType.User);
+            await CheckUserAsync("5050", "Gabriel", "Batistuta", "batistuta@yopmail.com", "311 322 4620", "Rosario", "batistuta.jpg", UserType.User);
+            await CheckUserAsync("6060", "Roger", "Federer", "federer@yopmail.com", "311 322 4620", "Zurich", "federer.jpg", UserType.User);
+            await CheckUserAsync("7070", "Mario", "Kempes", "kempes@yopmail.com", "311 322 4620", "Bell VIlle", "kempes.jpg", UserType.User);
+            await CheckUserAsync("8080", "Lucas", "Martinez", "lucas@yopmail.com", "311 322 4620", "Córdoba", "lucas.png", UserType.User);
+            await CheckUserAsync("9090", "Marina", "Martinez", "marina@yopmail.com", "311 322 4620", "Valencia", "marina.png", UserType.User);
+            await CheckUserAsync("9999", "Rafael", "Nadal", "nadal@yopmail.com", "311 322 4620", "Madrid", "nadal.jpg", UserType.User);
+
         }
 
         private async Task CheckRolesAsync()
