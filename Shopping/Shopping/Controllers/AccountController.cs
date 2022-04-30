@@ -7,6 +7,7 @@ using Shopping.Data.Entities;
 using Shopping.Enums;
 using Shopping.Helpers;
 using Shopping.Models;
+using Vereyon.Web;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Shopping.Controllers
@@ -18,14 +19,16 @@ namespace Shopping.Controllers
         private readonly IImageHelper _imageHelper;
         private readonly ICombosHelper _combosHelper;
         private readonly IMailHelper _mailHelper;
+        private readonly IFlashMessage _flashMessage;
 
-        public AccountController(DataContext context, IUserHelper userHelper, IImageHelper imageHelper, ICombosHelper combosHelper,IMailHelper mailHelper)
+        public AccountController(DataContext context, IUserHelper userHelper, IImageHelper imageHelper, ICombosHelper combosHelper,IMailHelper mailHelper, IFlashMessage flashMessage)
         {
             _context = context;
             _userHelper = userHelper;
             _imageHelper = imageHelper;
             _combosHelper = combosHelper;
             _mailHelper = mailHelper;
+            _flashMessage = flashMessage;
         }
 
         public IActionResult Login()
@@ -56,15 +59,18 @@ namespace Shopping.Controllers
 
                 if(result.IsLockedOut)
                 {
-                    ModelState.AddModelError(string.Empty, "Ha superado el máximo número de intentos, su cuenta está bloqueada, intente de nuevo en 5 minutos");
+                    _flashMessage.Danger("Ha superado el máximo número de intentos, su cuenta está bloqueada, intente de nuevo en 5 minutos.");
+                    //ModelState.AddModelError(string.Empty, "Ha superado el máximo número de intentos, su cuenta está bloqueada, intente de nuevo en 5 minutos");
                 }
                 else if (result.IsNotAllowed)
                 {
-                    ModelState.AddModelError(string.Empty, "El usuario no ha sido habilitado. Debe seguir las instrucciones del correo que se le ha enviado para poder habilitar su usuario.");
+                    _flashMessage.Danger("El usuario no ha sido habilitado, debes de seguir las instrucciones enviadas al correo para poder habilitarlo.");
+                    //ModelState.AddModelError(string.Empty, "El usuario no ha sido habilitado. Debe seguir las instrucciones del correo que se le ha enviado para poder habilitar su usuario.");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
+                    _flashMessage.Danger("Email o contraseña incorrectos.");
+                    //ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
                 }
             }
 
@@ -114,7 +120,8 @@ namespace Shopping.Controllers
                 User user = await _userHelper.AddUserAsync(model);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado por otro usuario.");
+                    _flashMessage.Danger("Este correo ya está siendo usado.");
+                    //ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado por otro usuario.");
                     model.Countries = await _combosHelper.GetComboCountriesAsync();
                     model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
                     model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
@@ -152,10 +159,14 @@ namespace Shopping.Controllers
                     $"</hr></br><p><a href = \"{tokenLink}\">Confirmar Email</a></p>");
                 if (response.IsSuccess)
                 {
-                    ViewBag.Message = "Las instrucciones para habilitar su cuenta han sido enviadas al correo.";
-                    return View(model);
+                    //ViewBag.Message = "Las instrucciones para habilitar su cuenta han sido enviadas al correo.";
+                    //return View(model);
+
+                    _flashMessage.Info("Usuario registrado. Para poder ingresar al sistema, siga las instrucciones que han sido enviadas a su correo.");
+                    return RedirectToAction(nameof(Login));
+
                 }
-                ModelState.AddModelError(string.Empty, response.Message);
+                _flashMessage.Danger(string.Empty, response.Message);
             }
             model.Countries = await _combosHelper.GetComboCountriesAsync();
             model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
@@ -261,7 +272,7 @@ namespace Shopping.Controllers
             {
                 if (model.OldPassword == model.NewPassword)
                 {
-                    ModelState.AddModelError(string.Empty, "Debes ingresar una contraseña diferente.");
+                    _flashMessage.Danger("Debes ingresar una contraseña diferente.");
                     return View(model);
                 }
 
@@ -271,16 +282,19 @@ namespace Shopping.Controllers
                     IdentityResult? result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
                     if (result.Succeeded)
                     {
+                        _flashMessage.Info("Contraseña cambiada con éxito.");
                         return RedirectToAction("ChangeUser");
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
+                        _flashMessage.Danger(result.Errors.FirstOrDefault().Description);
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Usuario no encontrado.");
+                    _flashMessage.Info("Usuario no encontrado.");
+                    
+                    //ModelState.AddModelError(string.Empty, "Usuario no encontrado.");
                 }
             }
 
@@ -322,7 +336,8 @@ namespace Shopping.Controllers
                 User user = await _userHelper.GetUserAsync(model.Email);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "El correo ingresado no corresponde a ningún usuario.");
+                    //ModelState.AddModelError(string.Empty, "El correo ingresado no corresponde a ningún usuario.");
+                    _flashMessage.Danger("El email no corresponde a ningún usuario registrado.");
                     return View(model);
                 }
 
@@ -337,8 +352,12 @@ namespace Shopping.Controllers
                     "Shopping - Reseteo de contraseña", $"<h1>Shopping - Reseteo de contraseña</h1>" +
                     $"Para establecer una nueva contraseña haga clic en el siguiente enlace:</br></br>" +
                     $"<a href = \"{link}\">Cambio de Contraseña</a>");
-                ViewBag.Message = "Las instrucciones para el cambio de contraseña han sido enviadas a su email.";
-                return View();
+
+                _flashMessage.Info("Las instrucciones para recuperar la contraseña han sido enviadas a su correo.");
+                return RedirectToAction(nameof(Login));
+
+                //ViewBag.Message = "Las instrucciones para el cambio de contraseña han sido enviadas a su email.";
+                //return View();
 
             }
 
@@ -359,15 +378,20 @@ namespace Shopping.Controllers
                 IdentityResult result = await _userHelper.ResetPasswordAsync(user, model.Token, model.Password);
                 if (result.Succeeded)
                 {
-                    ViewBag.Message = "Contraseña cambiada.";
-                    return View();
+                    _flashMessage.Info("Contraseña cambiada con éxito.");
+                    return RedirectToAction(nameof(Login));
+
+                    //ViewBag.Message = "Contraseña cambiada.";
+                    //return View();
                 }
 
-                ViewBag.Message = "Error cambiando la contraseña.";
+                _flashMessage.Danger("Error cambiando la contraseña.");
+                //ViewBag.Message = "Error cambiando la contraseña.";
                 return View(model);
             }
 
-            ViewBag.Message = "Usuario no encontrado.";
+            _flashMessage.Danger("Usuario no encontrado.");
+            //ViewBag.Message = "Usuario no encontrado.";
             return View(model);
         }
     }

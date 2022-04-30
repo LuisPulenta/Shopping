@@ -1,0 +1,100 @@
+ El volumen de la unidad D no tiene etiqueta.
+ El n£mero de serie del volumen es: 0F05-1616
+
+ Directorio de D:\Xamarin\Shopping\Imagenes\Productos
+
+30/04/2022  18:20    <DIR>          .
+30/04/2022  18:20    <DIR>          ..
+30/04/2022  18:20                 0 1.txt
+31/08/2021  13:51            33.613 Aguardiente.jpg
+31/08/2021  13:35            42.076 ajo.jpg
+31/08/2021  13:36             9.342 apio.jfif
+26/09/2021  10:10            13.806 arandela.jpg
+31/08/2021  13:36             5.025 arveja.jfif
+31/08/2021  18:23             7.099 baffless.jfif
+31/08/2021  18:31           179.372 balon de futbol fifa 2014.jpg
+28/08/2021  15:34             7.438 bananasbrasileras.jfif
+31/08/2021  18:32           323.012 bicicleta de iron man.jpg
+31/08/2021  18:32            32.956 bicicleta de ni¤o.jpg
+31/08/2021  18:32           101.715 bicicleta de ruta.jpg
+31/08/2021  18:33             5.594 bicicleta estatica.jfif
+31/08/2021  18:23             3.270 bluray.jfif
+27/07/2021  11:13            61.341 brocoli.jpg
+31/08/2021  13:36            54.913 calabacin.jpg
+31/08/2021  13:36             5.267 calabaza.jfif
+31/08/2021  18:24            16.653 camaradigitalpanasonic.jpg
+31/08/2021  18:33             5.687 caminadora.jfif
+31/08/2021  18:33            32.009 casco zoom bk.jpg
+31/08/2021  13:37            15.323 cebolla.jpg
+31/08/2021  13:52            94.681 cerveza.jpeg
+31/08/2021  13:37             4.715 ciruela.jfif
+31/08/2021  13:53             4.485 Coca cola.jfif
+31/08/2021  13:37             5.787 col.jfif
+31/08/2021  18:34            21.364 colchonetas.jpg
+31/08/2021  13:37             6.519 esparragos.jfif
+31/08/2021  13:38            93.258 espinaca.jpg
+31/08/2021  13:53            56.739 fanta.jpg
+31/08/2021  18:45            27.312 flotador en forma de delfin.jpg
+31/08/2021  13:38           120.525 frijoles.jpg
+31/08/2021  13:38             5.251 guayaba.jfif
+31/08/2021  13:38            38.828 guisantes.jpeg
+31/08/2021  13:39            26.982 habas.jpg
+31/08/2021  18:25            56.142 impresoracanon.jpg
+31/08/2021  18:25            29.035 iphone5.jpg
+31/08/2021  18:34            68.013 juego de mesa.jpg
+31/08/2021  18:40             6.490 laptop acer.jfif
+31/08/2021  18:26            16.447 laptop dell.jpg
+31/08/2021  13:39            71.758 lechuga.jpg
+31/08/2021  18:26            33.410 macbookair.jpg
+31/08/2021  18:35           191.971 mancuernas.jpg
+28/08/2021  15:33             6.984 mandarinas.jfif
+27/07/2021  11:12           111.617 Mango.png
+31/08/2021  13:39           114.160 manzana.jpg
+31/08/2021  18:26            59.598 maquinadeafeitar.jpg
+27/07/2021  11:13           142.074 maracuya.jpg
+31/08/2021  13:40             6.356 melocoton.jfif
+31/08/2021  13:40             5.178 melon.jfif
+31/08/2021  18:35           142.619 mesa de ping pong.jpg
+31/08/2021  18:27            28.429 microondas.jpg
+31/08/2021  18:35           158.621 monopatin.jpg
+31/08/2021  13:40             9.116 nabos.jfif
+31/08/2021  18:24           109.067 notebook.jpg
+27/07/2021  11:12            53.297 Papaya.jpg
+31/08/2021  18:36             7.591 patines zoom chasis aluminio.jfif
+31/08/2021  18:36            80.366 patineta.jpg
+31/08/2021  18:36            32.962 pelota de playa.jpg
+31/08/2021  13:40             9.903 pepinos.jfif
+31/08/2021  13:54            59.374 pepsi.jpg
+31/08/2021  13:40             4.451 peras.jfif
+31/08/2021  13:41             4.313 pimientos.jfif
+27/07/2021  11:12            13.773 platano.jpg
+31/08/2021  13:41             4.210 POMELO.jfif
+31/08/2021  18:28             7.299 portatiltouchhewlettpackard.jfif
+31/08/2021  18:37             4.463 raquetas.jfif
+31/08/2021  13:42             7.136 REMOLACHA.jfif
+31/08/2021  13:42             5.504 REPOLLO.jfif
+31/08/2021  13:55            39.632 ron a¤ejo.jpg
+31/08/2021  18:28           171.519 samsunggalaxys5.jpg
+31/08/2021  13:42             6.673 SANDIA.jfif
+31/08/2021  18:38             6.671 silbato profesional.jfif
+31/08/2021  13:54           135.556 Sprite.jpg
+31/08/2021  18:29            19.357 tabletintel7.jpg
+31/08/2021  13:42           145.399 TAMARINDO.jpg
+31/08/2021  18:29           121.372 teatroencasa.jpg
+31/08/2021  18:29            37.808 televisionsonybravia.jfif
+31/08/2021  18:30            14.925 televisi¢nde42pulgadas.jfif
+31/08/2021  13:57            11.877 tequila.jpg
+31/08/2021  13:43            33.183 TOMATE.jpg
+31/08/2021  18:38            18.200 trompo.jpg
+31/08/2021  18:30            27.859 tvledsamsung.jpg
+31/08/2021  13:43             6.727 UVA.jfif
+27/07/2021  11:34             6.176 vino espumoso brut royal.jpg
+27/07/2021  11:34            19.749 vino espumoso demi sec.jpg
+27/07/2021  11:40            18.619 vino tinto malbec.jpg
+27/07/2021  11:38            51.359 Vino Tinto.jpg
+31/08/2021  13:56            60.118 vodka.jpg
+31/08/2021  13:56            39.491 whisky.jpg
+31/08/2021  18:31            60.238 xbox360.jpeg
+31/08/2021  13:43             6.045 ZANAHORIA.jfif
+              91 archivos      4.182.237 bytes
+               2 dirs  508.240.560.128 bytes libres
