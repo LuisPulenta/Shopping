@@ -31,27 +31,6 @@ namespace Shopping.Controllers
                 .ToListAsync());
         }
 
-        // GET: Categories/Details/5
-        [HttpGet]
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var Category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (Category == null)
-            {
-                return NotFound();
-            }
-
-            return View(Category);
-        }
-
-       
-
         [NoDirectAccess]
         public async Task<IActionResult> Delete(int? id)
         {
