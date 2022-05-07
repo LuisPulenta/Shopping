@@ -6,6 +6,7 @@ using Shopping.Data.Entities;
 using Shopping.Helpers;
 using Shopping.Models;
 using Vereyon.Web;
+using static Shopping.Helpers.ModalHelper;
 
 namespace Shopping.Controllers
 {
@@ -34,6 +35,7 @@ namespace Shopping.Controllers
                 .ToListAsync());
         }
 
+        [NoDirectAccess]
         public async Task<IActionResult> Create()
         {
             CreateProductViewModel model = new()
@@ -84,7 +86,16 @@ namespace Shopping.Controllers
                 {
                     _context.Add(product);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    _flashMessage.Confirmation("Registro creado.");
+                    return Json(new
+                    {
+                        isValid = true,
+                        html = ModalHelper.RenderRazorViewToString(this, "_ViewAllProducts", _context.Products
+                        .Include(p => p.ProductImages)
+                        .Include(p => p.ProductCategories)
+                        .ThenInclude(pc => pc.Category).ToList())
+                    });
+
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
@@ -104,8 +115,11 @@ namespace Shopping.Controllers
             }
 
             model.Categories = await _combosHelper.GetComboCategoriesAsync();
-            return View(model);
+            return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "Create", model) });
+
         }
+        
+        [NoDirectAccess]
 
         public async Task<IActionResult> Edit(int? id)
         {
@@ -150,7 +164,16 @@ namespace Shopping.Controllers
                 product.Stock = model.Stock;
                 _context.Update(product);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _flashMessage.Confirmation("Registro actualizado.");
+                return Json(new
+                {
+                    isValid = true,
+                    html = ModalHelper.RenderRazorViewToString(this, "_ViewAllProducts", _context.Products
+                    .Include(p => p.ProductImages)
+                    .Include(p => p.ProductCategories)
+                    .ThenInclude(pc => pc.Category).ToList())
+                });
+
             }
             catch (DbUpdateException dbUpdateException)
             {
@@ -168,7 +191,8 @@ namespace Shopping.Controllers
                 _flashMessage.Danger(exception.Message);
             }
 
-            return View(model);
+            return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "Edit", model) });
+
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -371,13 +395,9 @@ namespace Shopping.Controllers
             return RedirectToAction(nameof(Details), new { Id = productCategory.Product.Id });
         }
 
-        public async Task<IActionResult> Delete(int? id)
+        [NoDirectAccess]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             Product product = await _context.Products
                 .Include(p => p.ProductCategories)
                 .Include(p => p.ProductImages)
@@ -387,23 +407,17 @@ namespace Shopping.Controllers
                 return NotFound();
             }
 
-            return View(product);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(Product model)
-        {
-            Product product = await _context.Products
-                .Include(p => p.ProductImages)
-                .Include(c => c.ProductCategories)
-                .FirstOrDefaultAsync(p => p.Id == model.Id);
-
+            //foreach (ProductImage productImage in product.ProductImages)
+            //{
+            //    await _blobHelper.DeleteBlobAsync(productImage.ImageId, "products");
+            //}
 
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
+            _flashMessage.Info("Registro borrado.");
             return RedirectToAction(nameof(Index));
         }
+
 
 
     }
